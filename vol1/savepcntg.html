@@ -1,0 +1,191 @@
+<html lang="en">
+
+
+    /*
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" /> */
+
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>div#layout {
+  text-align: center;
+}
+
+div#container {
+  width: 1500px;
+  height: 600px;
+  margin: auto;
+  background-color: #ffffff;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+text.title {
+  font-size: 40px;
+  font-weight: 200;
+  font-family: 'Permanent Marker', cursive;
+}
+
+text.label {
+  font-size: 20px;
+  font-weight: 300;
+  font-family: 'Permanent Marker', cursive;
+}
+
+text.source {
+  font-size: 12px;
+  font-family: orator-std, monospace;
+}
+</style>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+    <div id='layout'>
+      <!-- <h2>Bar chart example</h2> -->
+      <div id='container'>
+        <svg />
+      </div>
+    </div>
+
+<script>const rawData = [
+
+  {
+    date: '2008 Casillas',
+    value: 87,
+    colour: '#DAA520',
+    httpLink: "https://frankocean.tumblr.com/archive/2010/9"
+  },
+    {
+    date: '2008 AVG',
+    value: 78,
+    colour: '#c3c3c3',
+    httpLink: "https://frankocean.tumblr.com/archive/2010/9"
+  },
+  {
+    date: '2010 Casillas',
+    value: 85,
+    colour: '#DAA520',
+    httpLink: "https://frankocean.tumblr.com/archive/2010/10"
+  },
+  {
+    date: '2010 AVG',
+    value: 73,
+    colour: "#c3c3c3",
+    httpLink: "https://frankocean.tumblr.com/archive/2010/11"
+  },
+    {
+    date: '2012 Casillas',
+    value: 94.5,
+    colour: '#DAA520',
+    httpLink: "https://frankocean.tumblr.com/archive/2010/10"
+  },
+  {
+    date: '2012 AVG',
+    value: 82,
+    colour: "#c3c3c3",
+    httpLink: "https://frankocean.tumblr.com/archive/2010/11"
+  }
+
+];
+
+
+
+const svg = d3.select('svg');
+const svgContainer = d3.select('#container');
+
+const margin = 80;
+const width = 1500 - 2 * margin;
+const height = 600 - 2 * margin;
+
+const chart = svg.append('g')
+  .attr('transform', `translate(${margin}, ${margin})`);
+
+const xScale = d3.scaleBand()
+  .range([0, width])
+  .domain(rawData.map((s) => s.date))
+  .padding(0.4)
+
+const yScale = d3.scaleLinear()
+  .range([height, 0])
+  .domain([0, 100]);
+
+const makeYLines = () => d3.axisLeft()
+  .scale(yScale)
+
+chart.append('g')
+  .attr('transform', `translate(0, ${height})`)
+  .call(d3.axisBottom(xScale))
+  /*.selectAll('text').remove();*/
+
+chart.append('g')
+  .call(d3.axisLeft(yScale));
+
+const barGroups = chart.selectAll()
+  .data(rawData)
+  .enter()
+  .append('g')
+
+barGroups
+  .append('rect')
+  .attr('fill', function(d) {
+    return d.colour
+  })
+  .attr('x', (g) => xScale(g.date))
+  .attr('y', (g) => yScale(g.value))
+  .attr('height', (g) => height - yScale(g.value))
+  .attr('width', xScale.bandwidth())
+
+
+  .on("click", function(d) {
+    if (d.httpLink) {
+      var win = window.open(d.httpLink, '_blank');
+      win.focus();
+    }
+  })
+
+  .on("mouseover", function(d) {
+    d3.select(this).style("fill", function(d) {
+      return '#000000'
+    })
+    d3.select(this).style("cursor", "pointer");
+  })
+
+  .on("mouseout", function(d) {
+    d3.select(this).style('fill', function(d) {
+      return d.colour
+    })
+    d3.select(this).style("cursor", "default");
+  })
+
+svg
+  .append('text')
+  .attr('class', 'label')
+  .attr('x', -(height / 2) - margin)
+  .attr('y', margin / 2.4)
+  .attr('transform', 'rotate(-90)')
+  .attr('text-anchor', 'middle')
+  .text('percentage of on target shots saved')
+/*
+svg.append('text')
+  .attr('class', 'label')
+  .attr('x', width / 2 + margin)
+  .attr('y', height + margin * 1.4)
+  .attr('text-anchor', 'middle')
+  .text("time (months) sept 2010 - dec 2018")*/
+
+svg.append('text')
+  .attr('class', 'title')
+  .attr('x', width / 5 + margin)
+  .attr('y', 40)
+  .attr('text-anchor', 'middle')
+  .text("SAVE %")
+
+svg.append('text')
+  .attr('class', 'source')
+  .attr('x', width - margin * 1.7)
+  .attr('y', height + margin * 1.7)
+  .attr('text-anchor', 'start')
+  .text('source: ')</script>
