@@ -2,6 +2,381 @@
 <!-- GOAL DIFFERENCE -->
 <!-- GOAL DIFFERENCE -->
 
+<h1>The Big 3</h1>
+<meta charset="utf-8">
+
+<head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<style>svg {
+font-family: Sans-Serif, Arial;
+}
+
+.line {
+stroke-width: 3;
+fill: none;
+}
+
+.axis path {
+stroke: black;
+}
+
+.text {
+font-size: 12px;
+}
+
+.title-text {
+font-size: 12px;
+}
+</style>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    var data = [{
+  name: "ARS",
+  values: [
+        {
+      date: "2011",
+      price: "1",
+      colour: "#DB0007"
+    },
+    {
+      date: "2012",
+      price: "1",
+      colour: "#DB0007"
+    },
+    {
+      date: "2013",
+      price: "3",
+      colour: "#DB0007"
+    },
+    {
+      date: "2014",
+      price: "4",
+      colour: "#DB0007"
+    },
+    {
+      date: "2015",
+      price: "3",
+      colour: "#DB0007"
+    },
+    {
+      date: "2016",
+      price: "3",
+      colour: "#DB0007"
+    },
+    {
+      date: "2017/18",
+      price: "3",
+      colour: "#DB0007"
+    },
+    {
+      date: "2018/19",
+      price: "1",
+      colour: "#DB0007"
+    },
+          {
+      date: "2019/20",
+      price: "3",
+      colour: "#DB0007"
+    }
+  ],
+  colour: "#DB0007"
+},
+
+{
+  name: "MNC",
+  values: [
+        {
+      date: "2014",
+      price: "5",
+      colour: "#6CABDD"
+    },
+    {
+      date: "2015",
+      price: "2",
+      colour: "#6CABDD"
+    },
+    {
+      date: "2016",
+      price: "1",
+      colour: "#6CABDD"
+    },
+    {
+  date: "2017/18",
+  price: "2",
+  colour: "#6CABDD"
+},
+{
+  date: "2018/19",
+  price: "2",
+  colour: "#6CABDD"
+},
+{
+  date: "2019/20",
+  price: "2",
+  colour: "#6CABDD"
+}
+  ],
+  colour: "#6CABDD"
+},
+{
+  name: "CHE",
+  values: [
+  {
+date: "2011",
+price: "6",
+colour: "#f4c2c2"
+},
+{
+date: "2012",
+price: "6",
+colour: "#f4c2c2"
+},
+{
+date: "2013",
+price: "7",
+colour: "#f4c2c2"
+},
+        {
+      date: "2014",
+      price: "1",
+      colour: "#f4c2c2"
+    },
+    {
+      date: "2015",
+      price: "1",
+      colour: "#f4c2c2"
+    },
+    {
+      date: "2016",
+      price: "2",
+      colour: "#f4c2c2"
+    },
+    {
+  date: "2017/18",
+  price: "1",
+  colour: "#f4c2c2"
+},
+{
+  date: "2018/19",
+  price: "3",
+  colour: "#f4c2c2"
+},
+{
+  date: "2019/20",
+  price: "1",
+  colour: "#f4c2c2"
+}
+  ],
+  colour: "#f4c2c2"
+}
+];
+
+var width = 500;
+var height = 300;
+var margin = 50;
+var duration = 250;
+
+var lineOpacity = "0.60";
+var lineOpacityHover = "1";
+var otherLinesOpacityHover = "0.1";
+var lineStroke = "3px";
+var lineStrokeHover = "3px";
+
+/*var parseDate = d3.timeParse("%Y");
+data.forEach(function(d) {
+d.values.forEach(function(d) {
+  /*d.date = parseDate(d.date);*/
+  /* d.date= +d.date
+  d.price = +d.price;
+});
+}); */
+/*
+var xScale = d3.scaleTime()
+.domain(d3.extent(data[0].values, d => d.date))
+.range([0, width - margin]);*/
+
+var xScale = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.date; }));
+
+
+
+var yScale = d3.scaleLinear()
+.domain([0, d3.max(data[0].values, d => d.price)])
+.range([height - margin, 0]);
+
+var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+var svg7 = d3.select("#chart").append("svg")
+.attr("width", (width + margin) + "px")
+.attr("height", (height + margin) + "px")
+.append('g')
+.attr("transform", `translate(${margin}, ${margin})`);
+
+var line = d3.line()
+.x(d => xScale(d.date))
+.y(d => yScale(d.price));
+
+let lines = svg7.append('g')
+.attr('class', 'lines');
+
+lines.selectAll('.line-group')
+.data(data).enter()
+.append('g')
+.attr('class', 'line-group')
+.on("mouseover", function(d, i) {
+  svg7.append("text")
+    .attr("class", "title-text")
+    .style("fill", "#ffffff")
+    .text(d.name)
+    .attr("text-anchor", "middle")
+    .attr("x", (width - margin) / 2)
+    .attr("y", 5);
+})
+.on("mouseout", function(d) {
+  svg.select(".title-text").remove();
+})
+.append('path')
+.attr('class', 'line')
+.attr('d', d => line(d.values))
+.style('stroke', (d, i) => d.colour)
+.style('opacity', lineOpacity)
+.on("mouseover", function(d) {
+  d3.selectAll('.line')
+    .style('opacity', otherLinesOpacityHover);
+  d3.select(this)
+    .style('opacity', lineOpacityHover)
+    .style("stroke-width", lineStrokeHover)
+    .style("cursor", "pointer");
+})
+
+.on("mouseout", function(d) {
+d3.selectAll(".line")
+  .style('opacity', lineOpacity);
+});
+
+
+/* Add circles in the line
+lines.selectAll("circle-group")
+.data(data).enter()
+.append("g")
+.style("fill", (d, i) => d.colour)
+.selectAll("circle")
+.data(d => d.values).enter()
+.append("g")
+.attr("class", "circle")
+.on("mouseover", function(d) {
+    d3.select(this)
+      .style("cursor", "pointer")
+      .append("text")
+      .attr("class", "text")
+      .text(`${d.price}`)
+      .attr("x", d => xScale(d.date) + 5)
+      .attr("y", d => yScale(d.price) - 10);
+  })
+.on("mouseout", function(d) {
+    d3.select(this)
+      .style("cursor", "none")
+      .transition()
+      .duration(duration)
+      .selectAll(".text").remove();
+  })*/
+/*  .append("circle")
+.attr("cx", d => xScale(d.date))
+.attr("cy", d => yScale(d.price))
+.attr("r", circleRadius)
+.style('opacity', circleOpacity)
+.on("mouseover", function(d) {
+      d3.select(this)
+        .transition()
+        .duration(duration)
+        .attr("r", circleRadiusHover);
+    })
+  .on("mouseout", function(d) {
+      d3.select(this)
+        .transition()
+        .duration(duration)
+        .attr("r", circleRadius);
+    });*/
+var xAxis = d3.axisBottom(xScale).ticks(5);
+var yAxis = d3.axisLeft(yScale).ticks(5);
+
+svg7.append("g")
+.attr("class", "x axis")
+.attr("transform", `translate(0, ${height-margin})`)
+.call(xAxis);
+
+svg7.append("g")
+.attr("class", "y axis")
+.call(yAxis)
+.append('text')
+.attr("y", 15)
+.attr("transform", "rotate(-90)")
+.attr("fill", "#000")
+.text("Yellow Cards");
+
+  </script>
+
+<!--- Graph of city, chelsea, arsenal places !--->
+
+
+<h1>HUGE SUMMER SIGNINGS</h1>
+<h2>Money</h2>
+<h4>Harry Maguire's £80,000,000 move from Leicester to Man United is the equivialent of 320 Pernille Harders.</h4>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<div id="transfers"></div>
+<script>
+
+var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var svg01 = d3.select("#transfers")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("https://raw.githubusercontent.com/oddball8/oddball8.github.io/master/vol0/transfers.csv", function(data) {
+
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+svg01.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .style("text-anchor", "end");
+
+var y = d3.scaleLinear()
+  .domain([0, 45000000])
+  .range([ height, 0]);
+svg01.append("g")
+  .call(d3.axisLeft(y));
+
+svg01.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.price); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.price); })
+    .attr("fill", function(d) {return d.colour})
+
+})
+
+</script>
+
 <h2>WSL Ballon D'or nominees</h2>
 <meta charset="utf-8">
 <script src="https://d3js.org/d3.v4.js"></script>
@@ -52,3 +427,76 @@ svg02.selectAll("mybar")
 })
 
 </script>
+
+
+<h1>red devils causing mischief</h1>
+<h3>2018/2019: in their first ever season, Man United win the championship, dropping only 5 points in 20 games and maintaining a crazy 91+ goal difference</h3>
+
+<h3>2019/2020: despite losing their captain, Alex Greenwood, to the renowned Olympique Lyonnais, Man United enjoy a strong first season. </h3>
+
+<h3>2020/2021: Man United drew the short straw for their first game, facing reigning champions Chelsea and their newly fortified squad. Man United surprised everyone picked up their first WSL
+point against a top 3 club. If this upset is any indication, Man United are set to exceed their own high expectations.</h3>
+<h3>city v united game timeline: 7 minutes in goal from free kick zelem, 54 minutes in goal from sigsworth, 64 minutes in straight red for keira walsh, 85 minutes yellow card for toone </h3>
+
+<!-- LYON -->
+<!-- LYON -->
+<!-- LYON -->
+
+<h1>Slaying the Lyon</h1>
+
+<h3>Ada Hegerberg suffered an ACL injury, which will see her back soon, although the long term impact to her game remains to be seen</h3>
+<h3>Chelsea signing Sam Kerr and now Pernille Harder goes some way to redress the balance.</h3>
+
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<div id="championsboot"></div>
+<script>
+
+var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    width = 400 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var svg03 = d3.select("#championsboot")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("https://raw.githubusercontent.com/oddball8/oddball8.github.io/master/vol0/champsgoals.csv", function(data) {
+
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.year; }))
+  .padding(0.2);
+svg03.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .style("text-anchor", "end");
+
+var y = d3.scaleLinear()
+  .domain([0, 2])
+  .range([ height, 0]);
+svg03.append("g")
+  .call(d3.axisLeft(y));
+
+svg03.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.year); })
+    .attr("y", function(d) { return y(d.ratio); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ratio); })
+    .attr("fill", function(d) {return d.colour})
+
+})
+</script>
+https://womenscompetitions.thefa.com/Article/Manchester-United-2-0-Manchester-City-201019
+https://www.bbc.co.uk/sport/football/54131985
+Tobin Heath = all time NWSL assist record and in a season
+Sam Kerr = all time NWSL goal record and in a season + the same for the W League
+https://www.guinnessworldrecords.com/world-records/629445-most-expensive-womens-football-soccer-transfer#:~:text=The%20most%20expensive%20women's%20football,)%2C%20on%201%20September%202020.

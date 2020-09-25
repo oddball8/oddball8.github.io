@@ -2,13 +2,15 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&family=Open+Sans:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {box-sizing: border-box}
 body {  font-family: 'Barclays Premier League';}
 
-body {background-image: url('kelly.svg');}
+body {background-image: url('background.png');}
+
   {background-repeat: no-repeat, repeat;}
 @font-face {
   font-family: 'Barclays Premier League';
@@ -18,32 +20,28 @@ body {background-image: url('kelly.svg');}
   width: 100%;
   overflow: auto;
 }
-.outlined {
-  color: #fffee4;
-  text-shadow:
-    -1px -1px 0 #000,
-     0   -1px 0 #000,
-     1px -1px 0 #000,
-     1px  0   0 #000,
-     1px  1px 0 #000,
-     0    1px 0 #000,
-    -1px  1px 0 #000,
-    -1px  0   0 #000;
-}
+
 
 
 h1   {
   font-size: 80px;
-  color: #0055A4;
+  color: #fffee4;
   text-align: center;
-  font-family: 'Barclays Premier League';
-}
+  font-family: 'Barclays Premier League';}
 
+
+.card {font-family: 'Press Start 2P', cursive;
+color: #000080;}
+
+h2 {  font-family: 'IBM Plex Sans', sans-serif;
+color: #fffee4;
+text-align: center;
+font-size: 60px;}
 h4   {
   font-size: 30px;
-  color: #0055A4;
+  color: #fffee4;
   text-align: center;
-  font-family: 'Barclays Premier League';
+font-family: 'Open Sans', sans-serif;
 }
 
 .navbar a {
@@ -51,19 +49,19 @@ h4   {
   padding: 12px;
   color: #fffee4;
   text-decoration: none;
-  font-size: 35 px;
+  font-size: 50px;
   width: 25%; /* Four links of equal widths */
   text-align: center;
 }
 
 .navbar a:hover {
 
-    color: #cccccc;
+    color: #c3c3c3;
 }
 .boxed {
 
-  color: white;
-    font-family: 'Barclays Premier League';
+  color: grey;
+    font-family: 'IBM Plex Sans', sans-serif;;
   padding: 5px;
 
   margin: 0;
@@ -84,14 +82,38 @@ hr {
     background-color: #DAA520;
     border: #DAA520;
 }
+
 </style>
 <body>
 
 <div class="navbar" class="outlined">
   <a class="outlined" href="index.html">Home</a>
-  <a class="outlined" href="newissue.html">Current Issue</a>
+  <a class="outlined" href="/vol0/wsl2020.html">Current Issue</a>
   <a class="outlined" href="archive.html">Archive</a>
   <a class="outlined" href="about.html">About</a>
 </div>
 
-<h4></h4>
+<h1>About</h1>
+<h2 STYLE="margin: 30px 100px 10px 100px">What is Stuck in the Rondo?</h2>
+<h4 STYLE="margin: 30px 100px 10px 100px">Stuck in the Rondo (S.I.T.R) is an online data visualisation periodical dedicated to the beautiful, unpredictable, frustrating game. Each issue takes a look at a different footballing story. We're talking the best players and the worst players, the periods of dominance and the huge upsets. There are great things that can be done with data in the modern game, but much of this project focuses on collecting interesting pieces of data that were harder to find. The best way to work out what S.I.T.R is all about is to look through the Archive.
+<br>
+The Stuck in the Rondo Mission Objectives:
+<br>
+1. Find hidden treasure amongst the data: football is full of numbers: minutes in a game, goals, assists, clean sheets, league tables, goal difference. Each issue of S.I.T.R aims to find the story behind the numbers. Sometimes, this might look like a simple bar chart showing goals per season. Other times, it might be a look at conditional probability and Bayes Theorem.
+<br>
+2. Pro WoSo: If you're only following men's football, you're only getting half the story. S.I.T.R is a platform for telling the best stories in football, and a lot of those stories come from the women's game. There are so many creative, interesting players, unbelievable winning streaks, and shocking moments to explore. I hope S.I.T.R can be a place where those unfamiliar with WoSo can learn the basics and place where the WoSo stans can see the game they love from a new, statistical perspective.
+<br>
+3. Pure nostalgia: S.I.T.R is here to remind you why you love football, whether that's through reminding you of a player you loved years ago and since forgot about, or through capturing the spirit of a hard won game. Fundamentally, I created this project because I love football. That's all it's about really.
+</h4>
+<h2 STYLE="margin: 30px 100px 10px 100px">Who are you?</h2>
+<h4 STYLE="margin: 30px 100px 10px 100px">
+My day job is pretty boring. I work for a consultancy, as developer for SAP software. SAP actually sponsor Hoffenheim, which is kind of cool. The whole thing is basically coding reports to read and write databases for business. Personally, I'd like to use databases more playfully. I created Stuck in the Rondo to help me better develop my skills in data visualisation and analysis. I also created it to learn more about one of my longest hobbies - football.
+ My clubs are Plymouth Argyle and Liverpool. If Plymouth Argyle ever get promoted to the Premier League, I'll cry for at least a week. I was born in 1996, so of course I think football peaked in the mid noughties. Liverpool had mixed fortunes back then, but the way they played was so compelling, so scrappy - like at Istanbul in 2005. I'm one of those deluded fans that plays "Football's Coming Home" on repeat every four years. I'm still waiting, probably will be forever.
+Some of my favourite players are Casillas, Totti, Aguero, Ji So-Yun, Miedema, and Oshoala. They'd make a pretty exciting 5 a side team.</h4>
+<h2 STYLE="margin: 30px 100px 10px 100px">Where can I follow you?<h2>
+
+
+ <a href="https://stackoverflow.com/users/11198478/oddball8"><img src="so1.svg" alt="stack overflow logo" height="400" class="center"></a>
+  <a href="https://github.com/oddball8"><img src="Octocat.png" height="300"></a>
+    <img src="glyph-logo_May2016.png" alt="instagram logo" height="300" width="300" class="center">
+  <a href="https://twitter.com/stuckintherondo"><img src="Twitter_Logo_Blue.png" ="250" ="400"></a>
